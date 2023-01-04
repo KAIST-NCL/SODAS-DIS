@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to SODAS+ DIS’s documentation! &mdash; SODAS+ DIS 3.0.0 문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="SODAS+ 오픈 데이터 생태계 개요" href="intro_sodas.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> SODAS+ DIS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Daemon.html">Daemon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DHSearch.html">DHSearch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RMSync.html">RMSync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SessionManager.html">SessionManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">SODAS+ DIS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Welcome to SODAS+ DIS’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-sodas-dis-s-documentation">
+<h1>Welcome to SODAS+ DIS’s documentation!<a class="headerlink" href="#welcome-to-sodas-dis-s-documentation" title="이 제목에 대한 퍼머링크"></a></h1>
+<p>본 문서는 SODA+ 시스템의 데이터허브 상호 운용 시스템 (DIS) 의 시스템 구조 및 라이브러리 정보를 포함한다.
+SODAS+ 는 오픈 데이터 생태계 구축 플랫폼으로, 생태계에 참여하여 데이터 공유를 지원하는 <code class="docutils literal notranslate"><span class="pre">데이터</span> <span class="pre">허브</span> <span class="pre">(DataHub)</span></code> 와
+생태계의 관리 감독을 담당하는 <code class="docutils literal notranslate"><span class="pre">거버넌스</span> <span class="pre">시스템</span> <span class="pre">(Governance</span> <span class="pre">System)</span></code> 으로 구성된다.
+그 중에서도 본 문서는 <code class="docutils literal notranslate"><span class="pre">데이터</span> <span class="pre">허브</span></code> 가 SODAS+ 플랫폼에 하나의 데이터 공유 주체로 참여할 때
+다른 <code class="docutils literal notranslate"><span class="pre">데이터</span> <span class="pre">허브</span></code> 및 <code class="docutils literal notranslate"><span class="pre">거버넌스</span> <span class="pre">시스템</span></code> 과의 상호 작용을 지원하는
+<strong>데이터 허브 상호운용 시스템 (DataHub Inter-operability System, DIS)</strong> 의 구조 및 기능을 소개한다.</p>
+<img alt="SODAS+ 생태계 구성 예시" class="align-center" src="_images/sodas_echosystem.png" />
+<p><strong>그림</strong>. SODAS+ 플랫폼 시스템 구성 예시</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/dis-structure.png"><img alt="_images/dis-structure.png" class="align-center" src="_images/dis-structure.png" style="width: 709.1999999999999px; height: 345.59999999999997px;" /></a>
+<p><strong>그림</strong>. 데이터 허브 상호 운용 시스템 (DIS) 정적 구조</p>
+<hr class="docutils" />
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro_sodas.html#id1">SODAS+ 플랫폼과 데이터 허브</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_sodas.html#id2">용어 정의</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro_sodas.html#datahub">데이터 허브 (DataHub)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro_sodas.html#governance-system">거버넌스 시스템 (Governance System)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro_sodas.html#datahub-platform">데이터맵 관리 시스템, 또는 데이터 허브 플랫폼 (DataHub Platform)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro_sodas.html#datahub-interoperability-system">데이터허브 상호운용 시스템 (DataHub Interoperability System)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#id1">주요 기능</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro.html#id2">거버넌스 시스템에서 발행하는 표준 참조 모델 동기화</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro.html#sodas">SODAS+ 시스템 내에 있는 데이터 허브 탐색 지원</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro.html#id3">탐색 된 데이터 허브 중 관심 정보가 같은 데이터 허브와의 실시간 동기화 지원</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#dis">데이터 허브 상호운용 시스템 (DIS) 정적 구조</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#id4">동작 개요</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro.html#id5">데이터 허브 시작</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro.html#id10">관심 정보 업데이트</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro.html#id11">데이터맵 동기화</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#id12">데이터 맵 관리 시스템과의 연동 구조</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Daemon.html">Daemon</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_DHDaemon.html">DHDaemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_ctrlKafka.html">ctrlKafka</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_ctrlKafka.html#ctrlconsumer">ctrlConsumer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_ctrlKafka.html#ctrlproducer">ctrlProducer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_daemonServer.html">Daemon Server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DHSearch.html">DHSearch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_DHSearch.html">DHSearch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_kademlia.html">Kademlia</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_kademlia.html#knode">KNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_kademlia.html#bucket">Bucket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_kademlia.html#rpc">RPC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_BootstrapProto.html">Bootstrap.proto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RMSync.html">RMSync</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_RMSync.html">RMSync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_RMSessionProto.html">RMSession.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_RMSessionSyncProto.html">RMSessionSync.proto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SessionManager.html">SessionManager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_SessionManager.html">SessionManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionRequester.html">SessionRequester</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionListener.html">SessionListener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_Session.html">Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionNegotiationProto.html">SessionNegotiation.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionSyncProto.html">SessionSync.proto</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro_sodas.html" class="btn btn-neutral float-right" title="SODAS+ 오픈 데이터 생태계 개요" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, KAIST NCL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

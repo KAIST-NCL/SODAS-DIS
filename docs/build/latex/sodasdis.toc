@@ -1,0 +1,51 @@
+\selectlanguage *{english}
+\contentsline {chapter}{\numberline {1}SODAS+ 오픈 데이터 생태계 개요}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}SODAS+ 플랫폼과 데이터 허브}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}용어 정의}{4}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}데이터 허브 (DataHub)}{4}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}거버넌스 시스템 (Governance System)}{4}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}데이터맵 관리 시스템, 또는 데이터 허브 플랫폼 (DataHub Platform)}{4}{subsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.2.4}데이터허브 상호운용 시스템 (DataHub Interoperability System)}{4}{subsection.1.2.4}%
+\contentsline {chapter}{\numberline {2}SODAS+ 데이터 허브 상호운용 시스템 (DIS)}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}주요 기능}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}거버넌스 시스템에서 발행하는 표준 참조 모델 동기화}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}SODAS+ 시스템 내에 있는 데이터 허브 탐색 지원}{6}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}탐색 된 데이터 허브 중 관심 정보가 같은 데이터 허브와의 실시간 동기화 지원}{7}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}데이터 허브 상호운용 시스템 (DIS) 정적 구조}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}동작 개요}{8}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}데이터 허브 시작}{8}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}관심 정보 업데이트}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}데이터맵 동기화}{10}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}데이터 맵 관리 시스템과의 연동 구조}{11}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Daemon}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}DHDaemon}{13}{section.3.1}%
+\contentsline {section}{\numberline {3.2}ctrlKafka}{16}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}ctrlConsumer}{17}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}ctrlProducer}{18}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Daemon Server}{18}{section.3.3}%
+\contentsline {chapter}{\numberline {4}DHSearch}{21}{chapter.4}%
+\contentsline {section}{\numberline {4.1}DHSearch}{21}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Kademlia}{24}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}KNode}{24}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Bucket}{28}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}RPC}{29}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Bootstrap.proto}{30}{section.4.3}%
+\contentsline {chapter}{\numberline {5}RMSync}{31}{chapter.5}%
+\contentsline {section}{\numberline {5.1}RMSync}{31}{section.5.1}%
+\contentsline {section}{\numberline {5.2}RMSession.proto}{33}{section.5.2}%
+\contentsline {section}{\numberline {5.3}RMSessionSync.proto}{34}{section.5.3}%
+\contentsline {chapter}{\numberline {6}SessionManager}{35}{chapter.6}%
+\contentsline {section}{\numberline {6.1}SessionManager}{35}{section.6.1}%
+\contentsline {section}{\numberline {6.2}SessionRequester}{40}{section.6.2}%
+\contentsline {section}{\numberline {6.3}SessionListener}{41}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Session}{43}{section.6.4}%
+\contentsline {section}{\numberline {6.5}SessionNegotiation.proto}{45}{section.6.5}%
+\contentsline {section}{\numberline {6.6}SessionSync.proto}{45}{section.6.6}%
+\contentsline {chapter}{\numberline {7}VersionControl}{47}{chapter.7}%
+\contentsline {section}{\numberline {7.1}VCModule}{47}{section.7.1}%
+\contentsline {section}{\numberline {7.2}VCConsumer}{48}{section.7.2}%
+\contentsline {section}{\numberline {7.3}VersionController}{49}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}versionController}{50}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}publishVC}{50}{subsection.7.3.2}%
+\contentsline {subsection}{\numberline {7.3.3}subscribeVC}{51}{subsection.7.3.3}%
+\contentsline {chapter}{색인}{53}{section*.168}%

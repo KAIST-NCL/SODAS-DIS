@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RMSync &mdash; SODAS+ DIS 3.0.0 문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="RMSync" href="_RMSync.html" />
+    <link rel="prev" title="Bootstrap.proto" href="_BootstrapProto.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> SODAS+ DIS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Daemon.html">Daemon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DHSearch.html">DHSearch</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">RMSync</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_RMSync.html">RMSync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_RMSessionProto.html">RMSession.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_RMSessionSyncProto.html">RMSessionSync.proto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="SessionManager.html">SessionManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SODAS+ DIS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">RMSync</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/RMSync.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="rmsync">
+<span id="rmsyncmodule"></span><h1>RMSync<a class="headerlink" href="#rmsync" title="이 제목에 대한 퍼머링크"></a></h1>
+<dl class="field-list">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><div class="line-block">
+<div class="line">Eunju Yang (<a class="reference external" href="mailto:yejyang&#37;&#52;&#48;kaist&#46;ac&#46;kr">yejyang<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">JiHwan Kim (<a class="reference external" href="mailto:j&#46;h_kim&#37;&#52;&#48;kaist&#46;ac&#46;kr">j<span>&#46;</span>h_kim<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">Jeongwon Lee (<a class="reference external" href="mailto:korjw1&#37;&#52;&#48;kaist&#46;ac&#46;kr">korjw1<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+</div>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>3.0.0 of 2022.11.30</p>
+</dd>
+</dl>
+<p>SODAS+ 생태계 내 오픈 참조 모델을 관리하는 Governance System 과의 오픈 참조 모델 동기화를 위한 세션 연동 및 해당 세션을 통한 오픈 참조 모델 동기화를 수행하는 모듈이다.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">SubModules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_RMSync.html">RMSync</a></li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Protobuf:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_RMSessionProto.html">RMSession.proto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_RMSessionSyncProto.html">RMSessionSync.proto</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_BootstrapProto.html" class="btn btn-neutral float-left" title="Bootstrap.proto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_RMSync.html" class="btn btn-neutral float-right" title="RMSync" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, KAIST NCL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
