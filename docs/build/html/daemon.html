@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daemon &mdash; SODAS+ DIS 3.0.0 문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="DHDaemon" href="_DHDaemon.html" />
+    <link rel="prev" title="SODAS+ 데이터 허브 상호운용 시스템 (DIS)" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> SODAS+ DIS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Daemon</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_DHDaemon.html">DHDaemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_ctrlKafka.html">ctrlKafka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_daemonServer.html">Daemon Server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DHSearch.html">DHSearch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RMSync.html">RMSync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SessionManager.html">SessionManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SODAS+ DIS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Daemon</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Daemon.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="daemon">
+<span id="daemonmodule"></span><h1>Daemon<a class="headerlink" href="#daemon" title="이 제목에 대한 퍼머링크"></a></h1>
+<p>Daemon 모듈은 SODAS+ DIS 시스템으로 들어오는 이벤트 입력을 처리하고 DIS 시스템의 모듈을 가동하고 이벤트를 전달하는 역할을 수행한다.
+Daemon 모듈은 데이터 허브로부터 들어오는 Kafka 메시지를 관리하고 타 모듈들과 연동을 수행하는 <a class="reference internal" href="_DHDaemon.html#dhdaemon"><span class="std std-ref">DHDaemon</span></a> 과 Kafka 와의 통신을 위한 <a class="reference internal" href="_ctrlKafka.html#ctrlkafka"><span class="std std-ref">ctrlKafka</span></a> 모듈
+그리고 DIS의 CLI 통신을 위한 <a class="reference internal" href="_daemonServer.html#daemonserver"><span class="std std-ref">Daemon Server</span></a> 로 구성된다.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">SubModules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_DHDaemon.html">DHDaemon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_ctrlKafka.html">ctrlKafka</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_daemonServer.html">Daemon Server</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="SODAS+ 데이터 허브 상호운용 시스템 (DIS)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_DHDaemon.html" class="btn btn-neutral float-right" title="DHDaemon" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, KAIST NCL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

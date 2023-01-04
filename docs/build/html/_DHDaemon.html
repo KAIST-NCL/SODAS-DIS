@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHDaemon &mdash; SODAS+ DIS 3.0.0 문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="ctrlKafka" href="_ctrlKafka.html" />
+    <link rel="prev" title="Daemon" href="Daemon.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> SODAS+ DIS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="Daemon.html">Daemon</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DHDaemon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_ctrlKafka.html">ctrlKafka</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_daemonServer.html">Daemon Server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DHSearch.html">DHSearch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RMSync.html">RMSync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SessionManager.html">SessionManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SODAS+ DIS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="Daemon.html">Daemon</a></li>
+      <li class="breadcrumb-item active">DHDaemon</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/_DHDaemon.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dhdaemon">
+<span id="id1"></span><h1>DHDaemon<a class="headerlink" href="#dhdaemon" title="이 제목에 대한 퍼머링크"></a></h1>
+<hr class="docutils" />
+<dl class="field-list">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><div class="line-block">
+<div class="line">Eunju Yang (<a class="reference external" href="mailto:yejyang&#37;&#52;&#48;kaist&#46;ac&#46;kr">yejyang<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">JiHwan Kim (<a class="reference external" href="mailto:j&#46;h_kim&#37;&#52;&#48;kaist&#46;ac&#46;kr">j<span>&#46;</span>h_kim<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">Jeongwon Lee (<a class="reference external" href="mailto:korjw1&#37;&#52;&#48;kaist&#46;ac&#46;kr">korjw1<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+</div>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>3.0.0 of 2022.11.30</p>
+</dd>
+</dl>
+<hr class="docutils" />
+<p>DHDaemon 은 DIS의 데몬 모듈로, 데이터 허브와의 통신을 위한 이벤트를 처리하고 하위 모듈(<cite>DHSearch</cite>)로 전달하는 역할을 수행한다.</p>
+<a class="reference internal image-reference" href="_images/dhdaemon.png"><img alt="Datahub Daemon" class="align-center" src="_images/dhdaemon.png" style="width: 461.7px; height: 166.79999999999998px;" /></a>
+<hr class="docutils" />
+<dl class="js class">
+<dt class="sig sig-object js" id="DHDaemon">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="n"><span class="pre">DHDaemon</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>DHDaemon 은 DIS 시스템의 데몬으로 생성자에서는 <a href="#id1"><span class="problematic" id="id2">`</span></a>setting.cfg`의 설정 내용을 바탕으로 DIS 프로그램에서 필요한 모듈들을 실행한다.</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._dhSearchListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dhSearchListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._dhSearchListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>dhSearch 모듈로부터 전달되는 메시지를 처리하기위한 Listener로 <code class="docutils literal notranslate"><span class="pre">UPDATE_BUCKET_LIST</span></code> 이벤트가 들어오는 경우
+탐색된 버킷 리스트를 <code class="docutils literal notranslate"><span class="pre">recv.dataHubList</span></code> 토픽으로 전송함.</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">dictionary(event,</span> <span class="pre">message)()</span></code></span>) – 이벤트 종류와 메시지를 저장한 딕셔너리 구조</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_DHSearch.html#DHSearch._dmUpdateBucketList" title="DHSearch._dmUpdateBucketList"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHSearch._dmUpdateBucketList</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._dhSearchUpdateInterestTopic">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dhSearchUpdateInterestTopic</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interestTopic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._dhSearchUpdateInterestTopic" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>데이터 허브의 관심 주제 (interest topic)이 업데이트 되는 경우 <code class="docutils literal notranslate"><span class="pre">dhSearch</span></code> 모듈로 해당 이벤트를 전달하는 메서드</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_DHSearch.html#DHSearch._dhDaemonListener" title="DHSearch._dhDaemonListener"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHSearch._dhDaemonListener</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._dmServerListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dmServerListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._dmServerListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>데몬용 CLI API를 처리하기위한 daemon server listener</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">dictionary(event,</span> <span class="pre">message)()</span></code></span>) – event와 message key 값을 가진 메시지</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._dmServerSetBucketList">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dmServerSetBucketList</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._dmServerSetBucketList" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>CLI 데이터 업데이트를 위해 데몬이 가진 정보를 dmServer 모듈로 전달
+수정된 버킷 리스트 정보를 dmServer 모듈로 전달함.
+[postMessage] to daemonServer</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._dmServerSetRM">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dmServerSetRM</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">referenceModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._dmServerSetRM" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>CLI 데이터 업데이트를 위해 데몬이 가진 정보를 dmServer 모듈로 전달
+수정된 참조 모델 (referenceModel) 정보를 dmServer 모듈로 전달함.
+[postMessage] to daemonServer</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._dmServerSetSessionList">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dmServerSetSessionList</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sessionList</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._dmServerSetSessionList" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>CLI 데이터 업데이트를 위해 데몬이 가진 정보를 dmServer 모듈로 전달
+수정된 세션 리스트 정보를 dmServer 모듈로 전달함.
+[postMessage] to daemonServer</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sessionList</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">list(string)()</span></code></span>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._raiseError">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_raiseError</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errorCode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._raiseError" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>에러 메시지 전달</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._rmSyncInit">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_rmSyncInit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._rmSyncInit" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>rmSync 모듈로 <code class="docutils literal notranslate"><span class="pre">INIT</span></code> 메시지를 전달하는 메서드</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_RMSync.html#RMSync._dhDaemonListener" title="RMSync._dhDaemonListener"><code class="xref any js js-func docutils literal notranslate"><span class="pre">RMSync._dhDaemonListener</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._rmSyncListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_rmSyncListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._rmSyncListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>rmSync 모듈 (참조 모델 동기화 모듈)로부터 전달되는 메시지를 처리하기 위한 Listener로
+<code class="docutils literal notranslate"><span class="pre">UPDATE_REFERENCE_MODEL</span></code> 이벤트가 들어오는 경우 데이터 허브로 들어온 오픈 참조 모델을 데이터 허브로 전달</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_RMSync.html#RMSync._dmUpdateReferenceModel" title="RMSync._dmUpdateReferenceModel"><code class="xref any js js-func docutils literal notranslate"><span class="pre">RMSync._dmUpdateReferenceModel</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._smInit">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_smInit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._smInit" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>sessionManager 모듈로 <code class="docutils literal notranslate"><span class="pre">INIT</span></code> 메시지를 전달하는 메서드</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_SessionManager.html#SessionManager._dhDaemonListener" title="SessionManager._dhDaemonListener"><code class="xref any js js-func docutils literal notranslate"><span class="pre">SessionManager._dhDaemonListener</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._smListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_smListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._smListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>sessionManager 모듈로부터 전달되는 메시지를 처리하기 위한 Listener로 <code class="docutils literal notranslate"><span class="pre">GET_SESSION_LIST_INFO</span></code> 메시지가 들어오는 경우
+획득된 session list 정보를 <code class="docutils literal notranslate"><span class="pre">recv.sessionList</span></code> 토픽으로 전달</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._smSyncOn">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_smSyncOn</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datahubs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._smSyncOn" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>sessionManager로 SYNC_ON 메시지를 전달하는 메서드로
+datahub 아이디 리스트가 주어지면 해당 리스트의 노드 ID 정보로부터 버킷 정보를 추출하여
+sessionManager 모듈에 SYNC_ON 메시지와 함께 전달
+[postMessage] to sessionManager {‘event’:’SYNC_ON’}</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>datahubs</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">list(string)()</span></code></span>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p><strong>number</strong> –</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_SessionManager.html#SessionManager._dhDaemonListener" title="SessionManager._dhDaemonListener"><code class="xref any js js-func docutils literal notranslate"><span class="pre">SessionManager._dhDaemonListener</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._smUpdateInterestTopic">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_smUpdateInterestTopic</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interestTopic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._smUpdateInterestTopic" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>sessionManager로 관심 토픽 정보를 전달하는 메서드</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interestTopic</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">list(string)()</span></code></span>) – 관심 토픽 정보 리스트</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_SessionManager.html#SessionManager._dhDaemonListener" title="SessionManager._dhDaemonListener"><code class="xref any js js-func docutils literal notranslate"><span class="pre">SessionManager._dhDaemonListener</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._smUpdateNegotiation">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_smUpdateNegotiation</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session_negotiation_option</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._smUpdateNegotiation" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>sessionManager로 협상 옵션 정보를 전달하는 메서드</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>session_negotiation_option</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">dictionary()</span></code></span>) – </p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_SessionManager.html#SessionManager._dhDaemonListener" title="SessionManager._dhDaemonListener"><code class="xref any js js-func docutils literal notranslate"><span class="pre">SessionManager._dhDaemonListener</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._vcInit">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_vcInit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._vcInit" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>initialize Version Control module
+[postMessage] to versionControl module {‘event’:’INIT’}</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._vcListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_vcListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._vcListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>VersionControl 모듈로부터 전달되는 메시지를 처리하기 위한 Listener</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon._vcUpdateReferenceModel">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_vcUpdateReferenceModel</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">referenceModel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon._vcUpdateReferenceModel" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>참조 모델 (reference model)을 governance system으로부터 전달받은 경우 (CREATE/UPDATE)
+수정된 참조 모델을 바탕으로 파일 트리를 형성하도록 해당 정보를 version control 모듈로 전달함</p>
+<blockquote>
+<div><p>&lt;p&gt; [postMessage] to versionControl module <code class="docutils literal notranslate"><span class="pre">{'event':</span> <span class="pre">'UPDATE_REFERENCE_MODEL',</span> <span class="pre">'data':</span> <span class="pre">referenceModel}</span></code> &lt;/p&gt;</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon.init">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">init</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon.init" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>DHDaemon 초기화 함수로, 처음 DIS가 시작할 때 호출됨.
+DIS와 DataHub 통신에 필요한 Kafka Topic 생성.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>Promise.&lt;void&gt;</strong> –</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_ctrlKafka.html#ctrlProducer.createCtrlTopics" title="ctrlProducer.createCtrlTopics"><code class="xref any js js-func docutils literal notranslate"><span class="pre">ctrlProducer.createCtrlTopics</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon.run">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">run</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon.run" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>데몬 실행 함수로 각 서브 모듈들을 worker thread로 실행함.
+모든 worker thread 실행 후, <code class="docutils literal notranslate"><span class="pre">recv.dataHub``로</span> <span class="pre">들어오는</span> <span class="pre">모든</span> <span class="pre">이벤트를</span> <span class="pre">처리하는</span> <span class="pre">쓰레드</span> <span class="pre">시작</span> <span class="pre">(``ctrlConsumer.onMessage()</span></code>)</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_daemonServer.html#daemonserver"><span class="std std-ref">Daemon Server</span></a></p></li>
+<li><p><a class="reference internal" href="_DHSearch.html#dhsearch"><span class="std std-ref">DHSearch</span></a></p></li>
+<li><p><code class="xref any docutils literal notranslate"><span class="pre">vcModule</span></code></p></li>
+<li><p><a class="reference internal" href="_SessionManager.html#sessionmanager"><span class="std std-ref">SessionManager</span></a></p></li>
+<li><p><a class="reference internal" href="_RMSync.html#rmsync"><span class="std std-ref">RMSync</span></a></p></li>
+<li><p><a class="reference internal" href="_ctrlKafka.html#ctrlConsumer.onMessage" title="ctrlConsumer.onMessage"><code class="xref any js js-func docutils literal notranslate"><span class="pre">ctrlConsumer.onMessage</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="DHDaemon.stop">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">DHDaemon</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DHDaemon.stop" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>DIS 데몬 종료</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Daemon.html" class="btn btn-neutral float-left" title="Daemon" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_ctrlKafka.html" class="btn btn-neutral float-right" title="ctrlKafka" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, KAIST NCL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

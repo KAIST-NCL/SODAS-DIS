@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ctrlKafka &mdash; SODAS+ DIS 3.0.0 문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="Daemon Server" href="_daemonServer.html" />
+    <link rel="prev" title="DHDaemon" href="_DHDaemon.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> SODAS+ DIS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="Daemon.html">Daemon</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="_DHDaemon.html">DHDaemon</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ctrlKafka</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ctrlconsumer">ctrlConsumer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ctrlproducer">ctrlProducer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_daemonServer.html">Daemon Server</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DHSearch.html">DHSearch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RMSync.html">RMSync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SessionManager.html">SessionManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SODAS+ DIS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="Daemon.html">Daemon</a></li>
+      <li class="breadcrumb-item active">ctrlKafka</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/_ctrlKafka.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ctrlkafka">
+<span id="id1"></span><h1>ctrlKafka<a class="headerlink" href="#ctrlkafka" title="이 제목에 대한 퍼머링크"></a></h1>
+<dl class="field-list">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><div class="line-block">
+<div class="line">Eunju Yang (<a class="reference external" href="mailto:yejyang&#37;&#52;&#48;kaist&#46;ac&#46;kr">yejyang<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">Jeongwon Lee (<a class="reference external" href="mailto:korjw1&#37;&#52;&#48;kaist&#46;ac&#46;kr">korjw1<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+</div>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>3.0.0 of 2022.11.30</p>
+</dd>
+</dl>
+<p>ctrlKafka 모듈은 DISDaemon과 data map 관리 시스템 사이의 통신을 위한 Kafka 라이브러리를 포함한다.
+약속된 DISDaemon이 통신하기위한 <a class="reference internal" href="#ctrlconsumer">ctrlConsumer</a> 와 <a class="reference internal" href="#ctrlproducer">ctrlProducer</a> 모듈을 포함한다.</p>
+<hr class="docutils" />
+<section id="ctrlconsumer">
+<h2>ctrlConsumer<a class="headerlink" href="#ctrlconsumer" title="이 제목에 대한 퍼머링크"></a></h2>
+<dl class="js class">
+<dt class="sig sig-object js" id="ctrlConsumer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="n"><span class="pre">ctrlConsumer</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kafkaHost</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dhDaemon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ctrlConsumer" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>ctrlConsumer
+타겟이 되는 kafka 정보를 받아들여 주어진 조건을 만족하는 kafka로부터
+‘send.datahub’ 토픽의 정보를 지속적으로 listening하는 ctrlConsumer 객체 생성</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kafkaHost</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">string()</span></code></span>) – kafka Host 정보</p></li>
+<li><p><strong>options</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">dictionary()</span></code></span>) – options for kafka</p></li>
+<li><p><strong>dhDaemon</strong> (<span><a class="reference internal" href="_DHDaemon.html#DHDaemon" title="DHDaemon"><code class="xref js js-func docutils literal notranslate"><span class="pre">DHDaemon()</span></code></a></span>) – dhDaemon object</p></li>
+<li><p><strong>conf</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">dictionary()</span></code></span>) – configuration</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="js function">
+<dt class="sig sig-object js" id="ctrlConsumer.eventSwitch">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">ctrlConsumer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">eventSwitch</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ctrlConsumer.eventSwitch" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>send.datahub로 들어오는 메시지의 event 형태에 따른 대응
+&lt;p&gt; <code class="docutils literal notranslate"><span class="pre">START</span></code> : reference model 동기화 시작 <code class="docutils literal notranslate"><span class="pre">DHDaemon._rmSyncInit</span></code> &lt;/p&gt;
+&lt;p&gt; <code class="docutils literal notranslate"><span class="pre">STOP</span></code> : DIS 동작 종료 (not yet implemented) &lt;/p&gt;
+&lt;p&gt; <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> : 관심 허브 정보 등록 <code class="docutils literal notranslate"><span class="pre">DHDaemon._dhSearchUpdateInterestTopic</span></code> , <code class="docutils literal notranslate"><span class="pre">DHDaemon._smUpdateInterestTopic</span></code> &lt;/p&gt;
+&lt;p&gt; <code class="docutils literal notranslate"><span class="pre">SYNC_ON</span></code> : 특정 데이터 허브와 동기화 시작 <code class="docutils literal notranslate"><span class="pre">DHDaemon._smSyncOn</span></code> &lt;/p&gt;</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">event()</span></code></span>) – event {<code class="docutils literal notranslate"><span class="pre">START</span></code>, <code class="docutils literal notranslate"><span class="pre">STOP</span></code>, <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code>, <code class="docutils literal notranslate"><span class="pre">SYNC_ON</span></code>}</p></li>
+<li><p><strong>msg</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">string()</span></code></span>) – detailed message</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._rmSyncInit" title="DHDaemon._rmSyncInit"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._rmSyncInit</span></code></a></p></li>
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._dhSearchUpdateInterestTopic" title="DHDaemon._dhSearchUpdateInterestTopic"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._dhSearchUpdateInterestTopic</span></code></a></p></li>
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._smUpdateInterestTopic" title="DHDaemon._smUpdateInterestTopic"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._smUpdateInterestTopic</span></code></a></p></li>
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._smSyncOn" title="DHDaemon._smSyncOn"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._smSyncOn</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ctrlConsumer.onMessage">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">ctrlConsumer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">onMessage</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ctrlConsumer.onMessage" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>ctrlConsumer 의 onMessage 함수
+해당 토픽으로 들어오는 메시지를 이벤트와 메시지로 파싱한 후 이벤트 종류에 따른 처리를 위해 <code class="docutils literal notranslate"><span class="pre">ctrlConsumer.eventSwitch</span></code> 로 전달</p>
+<dl class="field-list simple">
+<dt class="field-odd">예외</dt>
+<dd class="field-odd"><p><span><code class="xref js js-func docutils literal notranslate"><span class="pre">error()</span></code></span> – 메시지가 send.dataHub의 규약을 따르지 않는 경우 에러 반환</p>
+</dd>
+<dt class="field-even">반환</dt>
+<dd class="field-even"><p><strong>eventSwitch(event, msg)</strong> – eventSwitch</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#ctrlConsumer.eventSwitch" title="ctrlConsumer.eventSwitch"><code class="xref any js js-func docutils literal notranslate"><span class="pre">ctrlConsumer.eventSwitch</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="ctrlproducer">
+<h2>ctrlProducer<a class="headerlink" href="#ctrlproducer" title="이 제목에 대한 퍼머링크"></a></h2>
+<dl class="js class">
+<dt class="sig sig-object js" id="ctrlProducer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="n"><span class="pre">ctrlProducer</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kafkaHost</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ctrlProducer" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>Kafka producer</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kafkaHost</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">string()</span></code></span>) – 카프카 정보</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="js function">
+<dt class="sig sig-object js" id="ctrlProducer._produce">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">ctrlProducer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_produce</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ctrlProducer._produce" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>지정한 토픽으로 메시지를 전송하는 메서드</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">string()</span></code></span>) – 이벤트 토픽</p></li>
+<li><p><strong>msg</strong> (<span><code class="xref js js-func docutils literal notranslate"><span class="pre">string()</span></code></span>) – 전송할 이벤트 스트링</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ctrlProducer.createCtrlTopics">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">ctrlProducer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">createCtrlTopics</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ctrlProducer.createCtrlTopics" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>카프카 토픽 생성하는 메서드로 DIS에서 사용하는 모든 토픽을 생성함.
+해당 토픽이 이미 생성되어 있는 경우 생성하지 않으며,
+토픽이 없는 경우 시스템이 동작할 수 없으므로 모든 토픽이 생성된 후 반환 됨.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>Promise.&lt;void&gt;</strong> – createTopics()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="ctrlProducer.sendError">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">ctrlProducer</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">sendError</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">errorCode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ctrlProducer.sendError" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>에러 메시지 전달</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#ctrlProducer._produce" title="ctrlProducer._produce"><code class="xref any js js-func docutils literal notranslate"><span class="pre">ctrlProducer._produce</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_DHDaemon.html" class="btn btn-neutral float-left" title="DHDaemon" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_daemonServer.html" class="btn btn-neutral float-right" title="Daemon Server" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, KAIST NCL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

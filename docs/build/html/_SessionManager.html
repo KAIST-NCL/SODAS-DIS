@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SessionManager &mdash; SODAS+ DIS 3.0.0 문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="SessionRequester" href="_SessionRequester.html" />
+    <link rel="prev" title="SessionManager" href="SessionManager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> SODAS+ DIS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Daemon.html">Daemon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DHSearch.html">DHSearch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RMSync.html">RMSync</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="SessionManager.html">SessionManager</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SessionManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionRequester.html">SessionRequester</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionListener.html">SessionListener</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_Session.html">Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionNegotiationProto.html">SessionNegotiation.proto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_SessionSyncProto.html">SessionSync.proto</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SODAS+ DIS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="SessionManager.html">SessionManager</a></li>
+      <li class="breadcrumb-item active">SessionManager</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/_SessionManager.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sessionmanager">
+<span id="id1"></span><h1>SessionManager<a class="headerlink" href="#sessionmanager" title="이 제목에 대한 퍼머링크"></a></h1>
+<dl class="field-list">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><div class="line-block">
+<div class="line">Eunju Yang (<a class="reference external" href="mailto:yejyang&#37;&#52;&#48;kaist&#46;ac&#46;kr">yejyang<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">JiHwan Kim (<a class="reference external" href="mailto:j&#46;h_kim&#37;&#52;&#48;kaist&#46;ac&#46;kr">j<span>&#46;</span>h_kim<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">Jeongwon Lee (<a class="reference external" href="mailto:korjw1&#37;&#52;&#48;kaist&#46;ac&#46;kr">korjw1<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+</div>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>3.0.0 of 2022.11.30</p>
+</dd>
+</dl>
+<dl class="js class">
+<dt class="sig sig-object js" id="SessionManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="n"><span class="pre">SessionManager</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>SessionManager</p>
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._createSession">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_createSession</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._createSession" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._dhDaemonListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dhDaemonListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._dhDaemonListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>_dhDaemonListener</p>
+<div class="admonition seealso">
+<p class="admonition-title">더 보기</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._smInit" title="DHDaemon._smInit"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._smInit</span></code></a></p></li>
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._smUpdateInterestTopic" title="DHDaemon._smUpdateInterestTopic"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._smUpdateInterestTopic</span></code></a></p></li>
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._smUpdateNegotiation" title="DHDaemon._smUpdateNegotiation"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._smUpdateNegotiation</span></code></a></p></li>
+<li><p><a class="reference internal" href="_DHDaemon.html#DHDaemon._smSyncOn" title="DHDaemon._smSyncOn"><code class="xref any js js-func docutils literal notranslate"><span class="pre">DHDaemon._smSyncOn</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._dmGetSessionListInfo">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_dmGetSessionListInfo</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._dmGetSessionListInfo" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._isEmptyObj">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_isEmptyObj</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._isEmptyObj" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._refactoringSessionInfo">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_refactoringSessionInfo</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tempSession</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">otherNodeId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._refactoringSessionInfo" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._sessionInit">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_sessionInit</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sessionWorker</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._sessionInit" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._sessionListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_sessionListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._sessionListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._sessionTransmitNegotiationResult">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_sessionTransmitNegotiationResult</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sessionWorker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_desc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sn_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._sessionTransmitNegotiationResult" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._sessionUpdatePubAsset">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_sessionUpdatePubAsset</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sessionWorker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commit_number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._sessionUpdatePubAsset" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._setSessionPort">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_setSessionPort</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._setSessionPort" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._slGetNewSessionInfo">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_slGetNewSessionInfo</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._slGetNewSessionInfo" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._slInit">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_slInit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._slInit" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._slListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_slListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._slListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._slUpdateInterestList">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_slUpdateInterestList</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._slUpdateInterestList" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._slUpdateNegotiationOptions">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_slUpdateNegotiationOptions</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._slUpdateNegotiationOptions" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._srGetNewSessionInfo">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_srGetNewSessionInfo</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._srGetNewSessionInfo" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._srInit">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_srInit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._srInit" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._srListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_srListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._srListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._srStartSessionConnection">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_srStartSessionConnection</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucketList</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._srStartSessionConnection" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._srUpdateInterestList">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_srUpdateInterestList</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._srUpdateInterestList" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._srUpdateNegotiationOptions">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_srUpdateNegotiationOptions</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._srUpdateNegotiationOptions" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager._vcListener">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_vcListener</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager._vcListener" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="SessionManager.run">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">SessionManager</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">run</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#SessionManager.run" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="SessionManager.html" class="btn btn-neutral float-left" title="SessionManager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_SessionRequester.html" class="btn btn-neutral float-right" title="SessionRequester" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, KAIST NCL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

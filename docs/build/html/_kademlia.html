@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ko" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kademlia &mdash; SODAS+ DIS 3.0.0 문서</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="Bootstrap.proto" href="_BootstrapProto.html" />
+    <link rel="prev" title="DHSearch" href="_DHSearch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> SODAS+ DIS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro_sodas.html">SODAS+ 오픈 데이터 생태계 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">SODAS+ 데이터 허브 상호운용 시스템 (DIS)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Modules:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Daemon.html">Daemon</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="DHSearch.html">DHSearch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="_DHSearch.html">DHSearch</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kademlia</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#knode">KNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bucket">Bucket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpc">RPC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="_BootstrapProto.html">Bootstrap.proto</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="RMSync.html">RMSync</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SessionManager.html">SessionManager</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SODAS+ DIS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="DHSearch.html">DHSearch</a></li>
+      <li class="breadcrumb-item active">Kademlia</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/_kademlia.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="kademlia">
+<span id="id1"></span><h1>Kademlia<a class="headerlink" href="#kademlia" title="이 제목에 대한 퍼머링크"></a></h1>
+<dl class="field-list">
+<dt class="field-odd">Authors</dt>
+<dd class="field-odd"><div class="line-block">
+<div class="line">Eunju Yang (<a class="reference external" href="mailto:yejyang&#37;&#52;&#48;kaist&#46;ac&#46;kr">yejyang<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">JiHwan Kim (<a class="reference external" href="mailto:j&#46;h_kim&#37;&#52;&#48;kaist&#46;ac&#46;kr">j<span>&#46;</span>h_kim<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+<div class="line">Jeongwon Lee (<a class="reference external" href="mailto:korjw1&#37;&#52;&#48;kaist&#46;ac&#46;kr">korjw1<span>&#64;</span>kaist<span>&#46;</span>ac<span>&#46;</span>kr</a>)</div>
+</div>
+</dd>
+<dt class="field-even">Version</dt>
+<dd class="field-even"><p>3.0.0 of 2022.11.30</p>
+</dd>
+</dl>
+<p>Kademlia 는 <a class="reference internal" href="_DHSearch.html#dhsearch"><span class="std std-ref">DHSearch</span></a> 의 데이터 허브 분산 탐색 프로토콜이 구현된 라이브러리 모듈로, 데이터 허브와의 통신을 위한 이벤트를 처리하고 하위 모듈(<cite>DHSearch</cite>)로 전달하는 역할을 수행한다.</p>
+<hr class="docutils" />
+<section id="knode">
+<h2>KNode<a class="headerlink" href="#knode" title="이 제목에 대한 퍼머링크"></a></h2>
+<dl class="js class">
+<dt class="sig sig-object js" id="KNode">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="n"><span class="pre">KNode</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">desc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="js function">
+<dt class="sig sig-object js" id="KNode._MSG">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_MSG</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._MSG" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>*</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._findClosestNodes">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_findClosestNodes</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">howMany</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._findClosestNodes" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p>contacts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._iterativeFind">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_iterativeFind</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._iterativeFind" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>&lt;p&gt; cb should be function(err, type, result) &lt;/p&gt;
+&lt;p&gt; where type == ‘VALUE’ -&gt; result is the value &lt;/p&gt;
+&lt;p&gt;       type == ‘NODE’  -&gt; result is [list of contacts] &lt;/p&gt;</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._iterativeFindNode">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_iterativeFindNode</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nodeID</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._iterativeFindNode" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._iterativeFindValue">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_iterativeFindValue</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._iterativeFindValue" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>this does not map over directly to the spec
+rather iterativeFind already does the related things
+if the callback gets a list of contacts, it simply
+assumes the key does not exist in the DHT (atleast with
+available knowledge)</p>
+<dl class="field-list simple">
+<dt class="field-odd">인수</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cb</strong> – : cb -&gt; function(err, value)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._onDeleteReply">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_onDeleteReply</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._onDeleteReply" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>This is just to prevent Unknown message errors</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._onFindNode">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_onFindNode</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._onFindNode" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>this is a primitive operation, no network activity allowed</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._onFindValue">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_onFindValue</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._onFindValue" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._onMessage">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_onMessage</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._onMessage" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._onPing">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_onPing</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._onPing" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._onStore">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_onStore</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._onStore" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._onStoreReply">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_onStoreReply</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#KNode._onStoreReply" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>This is just to prevent Unknown message errors</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._refreshBucket">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_refreshBucket</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucketIndex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._refreshBucket" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode._updateContact">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_updateContact</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contact</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode._updateContact" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode.connect">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">connect</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sl_portNum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync_interest_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode.connect" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode.debug">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">debug</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#KNode.debug" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode.delete">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">delete</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sl_portNum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sync_interest_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isDisStop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode.delete" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode.get">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">get</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode.get" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode.set">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">set</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cb</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#KNode.set" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd></dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="KNode.toString">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">KNode</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">toString</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#KNode.toString" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>string</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="bucket">
+<h2>Bucket<a class="headerlink" href="#bucket" title="이 제목에 대한 퍼머링크"></a></h2>
+<dl class="js class">
+<dt class="sig sig-object js" id="Bucket">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="n"><span class="pre">Bucket</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Bucket" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>Bucket</p>
+<dl class="js attribute">
+<dt class="sig sig-object js" id="Bucket._contacts">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">_contacts</span></span></span><a class="headerlink" href="#Bucket._contacts" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>Contact List</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.add">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">add</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.add" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>Bucket 내 관리하고 있는 Contact List 에 새로 추가될 contact 를 lastSeen 기준으로 정렬한 위치에 추가함.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>Bucket</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.contacts">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">contacts</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.contacts" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>Bucket 내 관리하고 있는 Contact List 객체의 clone 을 반환.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>*</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.contains">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">contains</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.contains" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>contact 의 nodeID 를 이용하여 Bucket 내 관리하고 있는 Contact List 에 해당 contact 객체가 있는지 유무를 반환.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>boolean</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.findContact">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">findContact</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.findContact" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>*</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.get">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">get</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.get" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>Bucket 내 관리하고 있는 Contact List 의 index 번째에 해당하는 contact 객체 반환.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p>contact</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.indexOf">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">indexOf</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.indexOf" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>number</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.remove">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">remove</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contact</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.remove" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>Bucket</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.removeIndex">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">removeIndex</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.removeIndex" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>Bucket</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.size">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.size" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>Bucket 내 관리하고 있는 Contact List 내 contact 개수를 반환.</p>
+<dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>*</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="Bucket.toString">
+<span class="sig-prename descclassname"><span class="n"><span class="pre">Bucket</span></span><span class="p"><span class="pre">.</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">toString</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Bucket.toString" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">반환</dt>
+<dd class="field-odd"><p><strong>string</strong> –</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<hr class="docutils" />
+<section id="rpc">
+<h2>RPC<a class="headerlink" href="#rpc" title="이 제목에 대한 퍼머링크"></a></h2>
+<dl class="js class">
+<dt class="sig sig-object js" id="RPC">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="n"><span class="pre">RPC</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bindAddress</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#RPC" title="이 정의에 대한 퍼머링크"></a></dt>
+<dd><p>RPC</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="_DHSearch.html" class="btn btn-neutral float-left" title="DHSearch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_BootstrapProto.html" class="btn btn-neutral float-right" title="Bootstrap.proto" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 저작권 2022, KAIST NCL.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
